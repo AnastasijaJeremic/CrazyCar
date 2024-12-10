@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Cars>
+
+@{
+    ViewData["Title"] = "Cars List";
+}
+
+<h2>Pretraga automobila</h2>
+
+<form method="post" action="@Url.Action("SearchResult", "Cars")">
+<div class="row">
+    <div class="col-md-2"
+        <label for="make">Marka</label>
+        <input type="text" class="form-control" id="make" name="make" placeholder="Unesite marku vozila">
+    </div>
+    <div class="col-md-2"
+        <label for="model">Model</label>
+        <input type="text" class="form-control" id="model" name="model" placeholder="Unesite model vozila">
+    </div>
+    <div class="col-md-3"
+        <label for="minPrice">Minimalna cena</label>
+        <input type="number" class="form-control" id="minPrice" name="minPrice" placeholder="Unesite minimalnu cenu" step="0.01">
+     </div>
+     <div class="col-md-3"
+        <label for="maxPrice">Maksimalna cena</label>
+        <input type="number" class="form-control" id="maxPrice" name="maxPrice" placeholder="Unesite maksimalnu cenu" step="0.01">
+     </div>
+    <button type="submit" class="btn btn-primary">Pretraži</button>
+</div>
+</form>
+<div class="container mt-4">
+    <h2>Lista vozila</h2>
+ </div>
+    <div class="row">
+        @foreach (var car in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <!-- Kartica za jedno vozilo -->
+                <div class="card">
+                    <img src="~/images/@car.Image" class="card-img-top" alt="@car.Make @car.Model">
+                    <div class="card-body">
+                        <h5 class="card-title">@car.Make @car.Model</h5>
+                        <p class="card-text">Cena po danu: $@car.PricePerDay</p>
+                        <p class="card-text">
+                            <strong>Status: </strong>
+                            @if (car.IsAvailable)
+                            {
+                                <span class="badge bg-success">Dostupno</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Nedostupno</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

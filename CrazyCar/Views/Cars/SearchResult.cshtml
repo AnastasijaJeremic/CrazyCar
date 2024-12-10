@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Cars>
+
+@{
+    ViewData["Title"] = "Rezultati pretrage";
+}
+
+<h2>Rezultati pretrage</h2>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        @foreach (var car in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="~/images/@car.Image" class="card-img-top" alt="@car.Make @car.Model">
+                    <div class="card-body">
+                        <h5 class="card-title">@car.Make @car.Model</h5>
+                        <p class="card-text">Cena po danu: $@car.PricePerDay</p>
+                        <p class="card-text">
+                            <strong>Status: </strong>
+                            @if (car.IsAvailable)
+                            {
+                                <span class="badge bg-success">Dostupno</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Nedostupno</span>
+                            }
+                        </p>
+
+                        <a asp-action="Index" asp-controller="Booking" class="btn btn-success">
+                            Rezerviši
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Nema vozila koja odgovaraju vašim kriterijumima ili nisu uneti kriterijumi.</p>
+}
